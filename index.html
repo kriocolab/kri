@@ -106,7 +106,27 @@
     letter-spacing:0.3px; text-decoration:none;
     position:relative;
   }
-  .logo span{color:var(--gold-soft);}
+  .logo-text{
+  display:flex;
+  flex-direction:column;
+  line-height:1.15;
+}
+.logo-text .main-name{
+  font-size:1.55rem;
+  font-weight:700;
+  font-style:italic;
+  color:var(--cream);
+  font-family:var(--font-display);
+}
+.logo-text .sub-name{
+  font-size:1.02rem;
+  font-weight:500;
+  font-style:italic;
+  color:var(--gold-soft);
+  letter-spacing:0.5px;
+  font-family:var(--font-display);
+  margin-top:1px;
+}
   .logo .lg-emoji{ display:inline-block; animation:clink 4s ease-in-out infinite; transform-origin:70% 90%; }
   @keyframes clink{ 0%,85%,100%{transform:rotate(0);} 88%{transform:rotate(-14deg);} 91%{transform:rotate(8deg);} 94%{transform:rotate(-4deg);} 97%{transform:rotate(0);} }
   nav ul{ list-style:none; display:flex; gap:26px; }
@@ -507,12 +527,11 @@
   <a href="#home" class="logo">
     <span class="lg-emoji">🍸</span>
     <span class="logo-text">
-      <span class="main-name">Umiya Delights</span>
-      <br>
-      <h5><span class="sub-name">Krios The Refreshment Bar</span></h5>
+    <span class="main-name">Umiya Delights</span>
+    <span class="sub-name">Krios The Refreshment Bar</span>
     </span>
   </a>
-
+  
   <nav>
     <ul id="navList">
       <li><a href="#menu" class="menu-link">Menu</a></li>
@@ -818,6 +837,7 @@
 </section>
 
 <footer>
+  <div class="foot-logo">Umiya delights</div>
   <div class="foot-logo">Krios</div>
   <p>Handmade drinks, honest ice cream, sweets by the jar.</p>
   <div class="fizz-line"><i></i><i></i><i></i><i></i><i></i></div>
