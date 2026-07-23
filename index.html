@@ -504,7 +504,15 @@
 <div id="cursor-glow"></div>
 
 <header>
-  <a href="#home" class="logo"><span class="lg-emoji">🍸</span> Krios</a>
+  <a href="#home" class="logo">
+    <span class="lg-emoji">🍸</span>
+    <span class="logo-text">
+      <span class="main-name">Umiya Delights</span>
+      <br>
+      <h5><span class="sub-name">Krios The Refreshment Bar</span></h5>
+    </span>
+  </a>
+
   <nav>
     <ul id="navList">
       <li><a href="#menu" class="menu-link">Menu</a></li>
@@ -767,8 +775,12 @@
         <a href="https://www.instagram.com/krios.shastrinagar/" target="_blank" aria-label="Instagram">
           <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" height="22px" width="22px">
         </a>
-        <a href="#" aria-label="Facebook">📘</a>
-        <a href="#" aria-label="WhatsApp">💬</a>
+        <a href="https://www.facebook.com/" target="_blank">
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" height="22px" width="22px">
+        </a>
+        <a href="https://wa.me/9727798166" target="_blank">
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" height="22px" width="22px">
+        </a>
       </div>
       <div class="map-embed">
         <a href="https://www.google.com/maps/place/Krios/@23.0652895,72.5458303,17z/data=!3m1!4b1!4m6!3m5!1s0x395e83c67efd05c3:0x602748c77df9d17f!8m2!3d23.0652895!4d72.5484052!16s%2Fg%2F11z804h3xk?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D"
@@ -861,7 +873,7 @@
   /* contact form */
   const form = document.getElementById('contactForm');
   const note = document.getElementById('formNote');
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyqKf6-Fbme_T0B71ga74wYxq6P01uMBMlMAEnMCJ6lX3tyWpZm1SNhgTZsttNl0CFQ/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyLlc5DgWfWi6vbNhl-kB97EkOfFV5dbNNfxD-oaBwbmV4WhiY9U3JQ51SN3aJt7z_B/exec';
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
     const name = document.getElementById('cf-name').value;
