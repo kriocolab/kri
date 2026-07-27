@@ -146,20 +146,78 @@
   .nav-toggle{ display:none; background:none; border:none; color:var(--cream); font-size:1.6rem; cursor:pointer; }
 
   .quick-nav{
-    position:relative; z-index:90;
-    background:var(--void);
+    position:sticky; top:60px; z-index:90;
+    background:rgba(10,9,8,0.94); backdrop-filter:blur(8px);
     border-bottom:1px solid rgba(201,162,39,0.12);
-    display:flex; flex-wrap:wrap; justify-content:center; gap:10px; padding:20px 5% 26px;
+    display:flex; gap:8px; overflow-x:auto; padding:6px 5%;
+    scrollbar-width:none;
   }
   .quick-nav::-webkit-scrollbar{display:none;}
   .qn-pill{
     flex-shrink:0; font-size:0.72rem; font-weight:600; letter-spacing:0.4px; text-transform:uppercase;
-    padding:8px 16px; border-radius:100px; color:var(--muted); text-decoration:none;
+    padding:6px 14px; border-radius:100px; color:var(--muted); text-decoration:none;
     border:1px solid rgba(201,162,39,0.22); background:rgba(255,255,255,0.02);
     transition:all .25s ease; white-space:nowrap;
   }
   .qn-pill:hover{ color:var(--cream); border-color:var(--gold-soft); }
   .qn-pill.active{ background:var(--ruby); color:var(--cream); border-color:var(--ruby); box-shadow:0 4px 14px rgba(181,32,59,0.4); }
+
+  .search-bar-wrap{
+    position:sticky; top:96px; z-index:89;
+    background:rgba(10,9,8,0.96); backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(201,162,39,0.12);
+    padding:6px 5%;
+  }
+  .search-box{
+    position:relative; max-width:440px; margin:0 auto;
+  }
+  .search-box input{
+    width:100%; padding:9px 42px 9px 18px; border-radius:100px;
+    border:1px solid rgba(201,162,39,0.3); background:rgba(255,255,255,0.04);
+    color:var(--cream); font-family:var(--font-body); font-size:0.9rem; font-weight:400;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .search-box input::placeholder{ color:var(--muted); }
+  .search-box input:focus{ outline:none; border-color:var(--gold-soft); background:rgba(255,255,255,0.07); }
+  .search-box .search-icon{
+    position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:0.95rem; pointer-events:none;
+  }
+  .search-box .clear-btn{
+    position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    color:var(--muted); background:none; border:none; cursor:pointer; font-size:1rem;
+    display:none; padding:4px 6px; line-height:1;
+  }
+  .search-box .clear-btn:hover{ color:var(--gold-soft); }
+  .search-results{
+    position:absolute; top:calc(100% + 8px); left:0; right:0;
+    background:var(--charcoal2); border:1px solid rgba(201,162,39,0.3); border-radius:10px;
+    max-height:300px; overflow-y:auto; z-index:95; display:none;
+    box-shadow:0 16px 34px rgba(0,0,0,0.55);
+  }
+  .search-results.show{ display:block; }
+  .search-result-item{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding:11px 16px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.05);
+    transition:background .15s ease; text-align:left;
+  }
+  .search-result-item:last-child{ border-bottom:none; }
+  .search-result-item:hover, .search-result-item.active{ background:rgba(201,162,39,0.14); }
+  .search-result-item .sr-text{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .search-result-item .sr-name{ color:var(--cream); font-size:0.88rem; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .search-result-item .sr-cat{ color:var(--muted); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.4px; }
+  .search-result-item .sr-price{ color:var(--gold-soft); font-weight:700; font-size:0.85rem; white-space:nowrap; flex-shrink:0; }
+  .search-result-empty{ padding:16px; color:var(--muted); font-size:0.85rem; text-align:center; font-style:italic; }
+  @keyframes highlightPulse{
+    0%{ box-shadow:0 0 0 0 rgba(201,162,39,0.85); }
+    60%{ box-shadow:0 0 0 14px rgba(201,162,39,0); }
+    100%{ box-shadow:0 10px 26px rgba(0,0,0,0.35); }
+  }
+  .card.search-highlight{ animation:highlightPulse 1.5s ease; border-color:var(--gold-soft); }
+  .no-results{
+    display:none; text-align:center; padding:60px 20px; color:var(--muted);
+    font-family:var(--font-display); font-style:italic; font-size:1.2rem;
+  }
 
   .hero{
     position:relative; min-height:96vh;
@@ -168,7 +226,7 @@
       radial-gradient(ellipse at 50% 38%, rgba(8,7,6,0.15), rgba(8,7,6,0.55) 70%),
       url('hero-cocktails.jpg') center 30%/cover no-repeat;
     overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:110px 20px 60px;
+    text-align:center; padding:50px 20px 60px;
   }
   .hero::before{
     content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
@@ -487,25 +545,10 @@
   #toTop span{ animation:bob 1.8s ease-in-out infinite; }
 
   @media (max-width:820px){
-    .hero{
-      min-height:auto;
-      padding:18px 20px 40px;
-      justify-content:flex-start;
-    }
-    .quick-nav{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:10px;
-      padding:18px 4% 26px;
-    }
-    .qn-pill{
-      text-align:center;
-      padding:8px 6px;
-      white-space:normal;
-      font-size:0.66rem;
-    }
+    .quick-nav{ top:58px; }
+    .search-bar-wrap{ top:94px; }
     nav ul{
-      position:fixed; top:64px; left:0; right:0; background:var(--charcoal);
+      position:fixed; top:66px; left:0; right:0; background:var(--charcoal);
       flex-direction:column; gap:0; padding:10px 0;
       max-height:0; overflow:hidden;
       box-shadow:0 10px 20px rgba(0,0,0,0.5); border-bottom:1px solid rgba(201,162,39,0.2);
@@ -558,6 +601,28 @@
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
 </header>
 
+<nav class="quick-nav" id="quickNav" aria-label="Jump to menu category">
+  <a href="#mocktails" class="qn-pill">Mocktails</a>
+  <a href="#shakes" class="qn-pill">Milkshakes</a>
+  <a href="#fizzy" class="qn-pill">Fizzy Sip</a>
+  <a href="#slush" class="qn-pill">Slush</a>
+  <a href="#cocobliss" class="qn-pill">Coco Bliss</a>
+  <a href="#icecream" class="qn-pill">Ice Cream</a>
+  <a href="#snowflacks" class="qn-pill">Snow Flacks</a>
+  <a href="#candy" class="qn-pill">Candy</a>
+  <a href="#coldcoffee" class="qn-pill">Cold Coffee</a>
+  <a href="#special" class="qn-pill">Special Drinks</a>
+</nav>
+
+<div class="search-bar-wrap">
+  <div class="search-box">
+    <input type="text" id="menuSearch" placeholder="Search for a drink, shake, or treat…" autocomplete="off">
+    <span class="search-icon" id="searchIcon">🔍</span>
+    <button class="clear-btn" id="clearSearch" aria-label="Clear search">✕</button>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
 <section class="hero" id="home">
   <div id="bubble-field"></div>
   <span class="garnish" style="top:20%; left:10%; animation-delay:.2s;">🍋</span>
@@ -575,20 +640,9 @@
   <p class="scroll-cue">Scroll to explore</p>
 </section>
 
-<nav class="quick-nav" id="quickNav" aria-label="Jump to menu category">
-  <a href="#mocktails" class="qn-pill">Mocktails</a>
-  <a href="#shakes" class="qn-pill">Milkshakes</a>
-  <a href="#fizzy" class="qn-pill">Fizzy Sip</a>
-  <a href="#slush" class="qn-pill">Slush</a>
-  <a href="#cocobliss" class="qn-pill">Coco Bliss</a>
-  <a href="#icecream" class="qn-pill">Ice Cream</a>
-  <a href="#snowflacks" class="qn-pill">Snow Flacks</a>
-  <a href="#candy" class="qn-pill">Candy</a>
-  <a href="#coldcoffee" class="qn-pill">Cold Coffee</a>
-  <a href="#special" class="qn-pill">Special Drinks</a>
-</nav>
-
 <main id="menu">
+
+<p class="no-results" id="noResults">No matches found — try a different search.</p>
 
 <section class="menu-section" id="mocktails">
   <div class="section-head">
@@ -1017,6 +1071,124 @@
       this.appendChild(ripple);
       setTimeout(()=> ripple.remove(), 650);
     });
+  });
+
+  /* menu search */
+  const menuSearch = document.getElementById('menuSearch');
+  const clearSearchBtn = document.getElementById('clearSearch');
+  const noResults = document.getElementById('noResults');
+  const searchResults = document.getElementById('searchResults');
+  const searchableSections = document.querySelectorAll('.menu-section[id]:not(#about):not(#gallery):not(#contact)');
+
+  const allProducts = Array.from(searchableSections).flatMap(sec=>{
+    const catTitle = sec.querySelector('.section-head h2')?.textContent || '';
+    return Array.from(sec.querySelectorAll('.card')).map(card=>({
+      el: card,
+      name: card.querySelector('h3')?.textContent || '',
+      desc: card.querySelector('.desc')?.textContent || '',
+      price: card.querySelector('.price')?.textContent || '',
+      category: catTitle
+    }));
+  });
+
+  function getStickyOffset(){
+    const header = document.querySelector('header');
+    const qn = document.getElementById('quickNav');
+    const sb = document.querySelector('.search-bar-wrap');
+    return (header?.offsetHeight || 0) + (qn?.offsetHeight || 0) + (sb?.offsetHeight || 0) + 16;
+  }
+
+  function jumpToProduct(product){
+    searchResults.classList.remove('show');
+    const sec = product.el.closest('.menu-section');
+    if(sec){ sec.style.display = ''; }
+    const divider = sec?.nextElementSibling;
+    if(divider && divider.classList.contains('fizz-divider')){ divider.style.display = ''; }
+    product.el.style.display = '';
+    const offset = getStickyOffset();
+    const top = product.el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(top, 0), behavior:'smooth' });
+    product.el.classList.remove('search-highlight');
+    void product.el.offsetWidth;
+    product.el.classList.add('search-highlight');
+    setTimeout(()=> product.el.classList.remove('search-highlight'), 1600);
+  }
+
+  function renderDropdown(q){
+    if(!q){ searchResults.classList.remove('show'); searchResults.innerHTML=''; return; }
+    const matches = allProducts.filter(p=>
+      p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
+    ).slice(0, 8);
+
+    if(matches.length === 0){
+      searchResults.innerHTML = '<div class="search-result-empty">No matching items — keep typing…</div>';
+      searchResults.classList.add('show');
+      return;
+    }
+
+    searchResults.innerHTML = matches.map((p, i)=>`
+      <div class="search-result-item" data-idx="${i}">
+        <div class="sr-text">
+          <span class="sr-name">${p.name}</span>
+          <span class="sr-cat">${p.category}</span>
+        </div>
+        <span class="sr-price">${p.price}</span>
+      </div>
+    `).join('');
+    searchResults.classList.add('show');
+
+    searchResults.querySelectorAll('.search-result-item').forEach((item, i)=>{
+      item.addEventListener('click', ()=> jumpToProduct(matches[i]));
+    });
+  }
+
+  function runMenuSearch(){
+    const q = menuSearch.value.trim().toLowerCase();
+    clearSearchBtn.style.display = q ? 'block' : 'none';
+    let anyMatch = false;
+
+    searchableSections.forEach(sec=>{
+      const cards = sec.querySelectorAll('.card');
+      let sectionMatch = false;
+      cards.forEach(card=>{
+        const name = (card.querySelector('h3')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('.desc')?.textContent || '').toLowerCase();
+        const match = !q || name.includes(q) || desc.includes(q);
+        card.style.display = match ? '' : 'none';
+        if(match) sectionMatch = true;
+      });
+      sec.style.display = (!q || sectionMatch) ? '' : 'none';
+      const divider = sec.nextElementSibling;
+      if(divider && divider.classList.contains('fizz-divider')){
+        divider.style.display = (!q || sectionMatch) ? '' : 'none';
+      }
+      if(sectionMatch) anyMatch = true;
+    });
+
+    noResults.style.display = (q && !anyMatch) ? 'block' : 'none';
+    renderDropdown(q);
+  }
+
+  menuSearch.addEventListener('input', runMenuSearch);
+  menuSearch.addEventListener('focus', ()=>{
+    if(menuSearch.value.trim()) searchResults.classList.add('show');
+  });
+  menuSearch.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      const first = searchResults.querySelector('.search-result-item');
+      if(first) first.click();
+    } else if(e.key === 'Escape'){
+      searchResults.classList.remove('show');
+    }
+  });
+  document.addEventListener('click', (e)=>{
+    if(!e.target.closest('.search-box')) searchResults.classList.remove('show');
+  });
+  clearSearchBtn.addEventListener('click', ()=>{
+    menuSearch.value = '';
+    runMenuSearch();
+    menuSearch.focus();
   });
 </script>
 
